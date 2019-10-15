@@ -1,12 +1,11 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { DatePicker } from 'antd';
 
 function onChange(date, dateString) {
     console.log(date, dateString);
 }
 
-class App extends React.Component<any, any>{
+class Login extends React.Component<any, any>{
     constructor(props) {
         super(props);
     }
@@ -21,5 +20,6 @@ class App extends React.Component<any, any>{
     }
 }
 
-const root = document.getElementById('root');
-ReactDOM.render(<App />, root);
+export {
+    Login
+}

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const lessToJs = require('less-vars-to-js');
-const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './assets/theme-vars.less'), 'utf8'));
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './src/assets/css/theme-vars.less'), 'utf8'));
 module.exports = {
     mode: 'development',
     entry: {
@@ -42,6 +42,18 @@ module.exports = {
                         options: {
                             modifyVars: themeVariables,
                             javascriptEnabled: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(jpg|jpeg|png|svg|woff2|woff|ttf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[hash].[ext]',
+                            publicPath: '/'
                         }
                     }
                 ]
