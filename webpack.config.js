@@ -21,11 +21,23 @@ module.exports = {
                         loader: 'awesome-typescript-loader'
                     }
                 ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
             }
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({ 
+        new HtmlWebpackPlugin({
             title: 'React Template',
             hash: true,
             template: path.join(__dirname, 'public/index.html')
@@ -42,9 +54,9 @@ module.exports = {
         open: true,
         historyApiFallback: true
     },
-    optimization:{
-        runtimeChunk:true,
-        splitChunks:{
+    optimization: {
+        runtimeChunk: true,
+        splitChunks: {
             chunks: 'all',
         }
     }
