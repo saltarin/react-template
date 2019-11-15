@@ -17,6 +17,7 @@ export class Waypoints extends React.Component<Props> {
             position={index + 1}
             latitude={point.lat}
             longitude={point.lng}
+            distance={point.distanceToHub}
             color="green"
           />
         ))}

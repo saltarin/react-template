@@ -9,13 +9,21 @@ const XY = [-12.157427, -76.957175];
 
 interface Props {
   setSelectedPoint: React.MouseEventHandler;
+  hub: object;
+  waypoints: object[];
 }
+
+
 
 export class Map extends React.Component<Props> {
   private $map = React.createRef();
   private map;
   private cord;
   private marker;
+  private hubMarker;
+  private waypoints;
+  private routeLayer = L.layerGroup([]);
+  
 
   componentDidMount() {
     const defaultTile = L.tileLayer(DEFAULT_TILE_API, {
@@ -26,7 +34,6 @@ export class Map extends React.Component<Props> {
       maxZoom: 19,
       id: "wiki"
     });
-
     const monoTile = L.tileLayer(MONO_TILE_API, {
       maxZoom: 19,
       id: "mono"
@@ -59,6 +66,7 @@ export class Map extends React.Component<Props> {
 
     const span = str =>
       `<span style='width: 40px; display:inline-block'>${str}</span>`;
+
     L.control
       .layers(
         {
@@ -78,12 +86,28 @@ export class Map extends React.Component<Props> {
     L.control
       .scale({ position: "bottomright", imperial: false })
       .addTo(this.map);
-    /*
-    const provider = new OpenStreetMapProvider();
-    const searchControl = new GeoSearchControl({
-      provider: provider
-    }).addTo(this.map);
-    */
+    
+    console.log('didMount');
+    this.initializeLayers();
+    this.routeLayer.addTo(this.map);
+  }
+
+  initializeLayers() {
+    this.map.removeLayer(this.routeLayer);
+    this.hubMarker = this.createMarker(this.props.hub);
+    this.waypoints = this.props.waypoints.map(waypoint => {
+        return this.createMarker(waypoint)
+    });
+    this.routeLayer = L.layerGroup([this.hubMarker, ...this.waypoints]);
+  }
+
+  componentWillReceiveProps() {
+    this.initializeLayers();
+  }
+
+  componentDidUpdate() {
+    console.log('agregando');
+    this.routeLayer.addTo(this.map);
   }
 
   createMarker = latlng => {
@@ -94,7 +118,7 @@ export class Map extends React.Component<Props> {
     return (
       <div
         ref={this.$map}
-        style={{ height: "400px", border: "1px solid #000" }}
+        style={{ height: "600px", border: "1px solid #000" }}
       />
     );
   }

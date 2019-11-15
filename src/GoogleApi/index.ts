@@ -10,7 +10,7 @@ export class GoogleMapsApi {
         (window as any).mapCallbacks = GoogleMapsApi.mapCallbacks.bind(this);
     }
     static getApiUrl(key) {
-        return `https://maps.googleapis.com/maps/api/js?key=${key}&callback=mapCallbacks`;
+        return `https://maps.googleapis.com/maps/api/js?key=${key}&callback=mapCallbacks&libraries=geometry`;
     }
     static appendScript(src) {
         const script = document.createElement("script");
