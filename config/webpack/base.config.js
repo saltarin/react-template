@@ -1,17 +1,19 @@
 const path = require('path');
 const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { defineWebpackConstants } = require('./config/env');
+const { defineWebpackConstants } = require('../../config/env');
+
+const webpackConstants = defineWebpackConstants();
+const rootPath = path.resolve(__dirname, '../..');
+const publicPath = process.env.PATH_STATIC + '/';
 
 module.exports = {
-  mode: 'development',
   entry: {
-    app: path.join(__dirname, 'src/index.tsx')
+    app: path.join(rootPath, 'src/index.tsx')
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
-    chunkFilename: '[name].js'
+    path: path.join(rootPath, 'dist'),
+    publicPath
   },
   module: {
     rules: [
@@ -23,12 +25,6 @@ module.exports = {
             loader: 'ts-loader'
           }
         ]
-      },
-      {
-        enforce: 'pre',
-        test: /.tsx$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -44,26 +40,21 @@ module.exports = {
     ]
   },
   plugins: [
-    new DefinePlugin(defineWebpackConstants()),
+    new DefinePlugin(webpackConstants),
     new HtmlWebpackPlugin({
       title: 'React Template',
       hash: true,
-      template: path.join(__dirname, 'public/index.html')
+      template: path.join(rootPath, 'public/index.html')
     }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      '@app': __dirname
+      '@app': rootPath
     }
   },
-  devtool: 'source-map',
-  devServer: {
-    open: true,
-    historyApiFallback: true
-  },
   optimization: {
-    runtimeChunk: true,
+    runtimeChunk:true,
     splitChunks: {
       chunks: 'all',
     }

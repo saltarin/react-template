@@ -4,22 +4,46 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack"
+    "start": "webpack-dev-server --config config/webpack/dev.config.js --port 7766",
+    "build": "webpack --config config/webpack/prod.config.js",
+    "prebuild": "rm dist -rf",
+    "linter": "eslint './src/**'",
+    "mock:server": "node ./mock/index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "awesome-typescript-loader": "5.2.1",
+    "@types/express": "4.17.2",
+    "@typescript-eslint/eslint-plugin": "2.11.0",
+    "@typescript-eslint/parser": "2.11.0",
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "dotenv-expand": "5.1.0",
+    "eslint": "6.7.2",
+    "eslint-config-und": "0.0.2",
+    "eslint-loader": "3.0.3",
+    "eslint-plugin-react": "7.17.0",
+    "express": "4.17.1",
+    "file-loader": "5.0.2",
     "html-webpack-plugin": "3.2.0",
+    "lowdb": "1.0.0",
+    "ts-loader": "6.2.1",
     "typescript": "3.6.4",
     "webpack": "4.41.1",
     "webpack-cli": "3.3.9",
-    "webpack-dev-server": "3.8.2"
+    "webpack-dev-server": "3.8.2",
+    "webpack-merge": "4.2.2"
   },
   "dependencies": {
+    "axios": "0.19.0",
     "react": "16.10.2",
-    "react-dom": "16.10.2"
+    "react-dom": "16.10.2",
+    "react-redux": "7.1.3",
+    "redux": "4.0.4",
+    "redux-form": "8.2.6",
+    "redux-thunk": "2.3.0",
+    "styled-components": "4.4.1"
   }
 }
